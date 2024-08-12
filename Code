@@ -1,0 +1,67 @@
+create table author(author_id varchar(10),aname varchar(20),Email varchar(10),Phone_number number(10),Status varchar(10),primary key (author_id));
+create table publisher(publisher_id varchar(10),pname varchar(20),Address varchar(20),primary key (publisher_id));
+create table languages(languages_id varchar(10),lname varchar(20),primary key (languages_id));
+create table members(member_id varchar(10),mname varchar(20),branchcode varchar(10),rollno varchar(2),Phone_no number(10),email_id varchar(20),dates_of_join varchar(10),status varchar(10),primary key(member_id));
+create table book(book_id varchar(10),title varchar(20),languages_id varchar(10),MRP varchar(10),publisher_id varchar(10),published_date varchar(10),volume varchar(10),status varchar(10),primary key (book_id),foreign key(languages_id)references languages(languages_id),foreign key(publisher_id) references publisher(publisher_id)); 
+create table book_author(book_id varchar(10),author_id varchar(10),primary key (book_id,author_id),foreign key(book_id) references book(book_id),foreign key(author_id) references author(author_id));
+create table book_issue(issue_id varchar(10),date_of_join varchar(10),book_id varchar(10),member_id varchar(10),expected_date_of_return varchar(10),status varchar(10),primary key (issue_id),foreign key(book_id) references book(book_id),foreign key(member_id) references members(member_id));
+drop table author;
+create table book_return(issue_id varchar(10),actual_date_of_return varchar(10),late_days varchar(10),late_fees varchar(10),primary key (issue_id),foreign key(issue_id) references book_issue(issue_id));
+create table late_fee_rule(from_days varchar(10),to_days varchar(10),amount varchar(10));
+create table book_return(issue_id varchar(10),actual_date_of_return varchar(10),late_days varchar(10),late_fees varchar(10),primary key (issue_id),foreign key(issue_id) references book_issue(issue_id));
+insert into languages values(1245,'malayalam');
+select * from languages;
+
+alter table author modify(Email varchar(20),Status varchar(10));
+alter table members modify(dates_of_join varchar(20));
+alter table members modify (dates_of_join date);
+alter table members modify (rollno varchar(4));
+
+insert into author values(1001,'aman','aman1@gmail.com',7963214580,'NA');
+insert into author values(1002,'Naveen','nav@gmail.com',7963214581,'Active');
+select * from author;
+
+insert into publisher values(2000,'amar','kottayam');
+insert into publisher values(2001,'jacob','kannur');
+select * from publisher;
+
+insert into languages values(3000,'Malayalam');
+insert into languages values(3001,'english');
+select * from languages;
+
+insert into members values(400,'Neha','cse',47,123456789,'neha@123','12-03-2022','avail');
+insert into members values(401,'Nikita','cse',48,123456782,'nikki@123','13/03/22','avail');
+select * from members;
+
+insert into book values(1232,'aadujeevitham',1245,500,2000,'31-12-2003',2,'available');
+insert into book values(1233,'Dinkan',3000,100,2001,'31/12/22',2,'available');
+select * from book;
+
+insert into book_author values(1232,1001);
+insert into book_author values(1233,1002);
+select * from book_author;
+
+insert into book_issue values(4000,'31/12/2003',1232,400,'10/01/2004','available');
+insert into book_issue values(4001,'22/11/2003',1233,401,'10/12/2003','available');
+select * from book_issue;
+
+insert into book_return values(4000,'10/01/2004',0,0);
+insert into book_return values(4001,'10/12/2003',2,10);
+select * from book_return;
+
+insert into late_fee_rule values(0,7,10);
+insert into late_fee_rule values(7,30,100);
+select * from late_fee_rule;
+
+
+
+
+
+commit;
+
+alter table book add(pages varchar(10));
+select * from book;
+alter table members modify (dates_of_join date);
+desc members;
+truncate table publisher;
+truncate table book;
