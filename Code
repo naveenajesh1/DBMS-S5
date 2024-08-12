@@ -65,3 +65,5 @@ alter table members modify (dates_of_join date);
 desc members;
 truncate table publisher;
 truncate table book;
+alter table late_fee_rule rename to fine_table;
+desc fine_table;
